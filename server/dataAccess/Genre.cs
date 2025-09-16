@@ -3,7 +3,15 @@ using System.Collections.Generic;
 
 namespace scaffold;
 
-public partial class Genre
+public interface IGenre
+{
+    string Id { get; set; }
+    string Name { get; set; }
+    DateTime? Createdat { get; set; }
+    ICollection<Book> Books { get; set; }
+}
+
+public partial class Genre : IGenre
 {
     public string Id { get; set; } = null!;
 

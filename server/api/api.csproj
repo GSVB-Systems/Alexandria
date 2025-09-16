@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\scaffold\scaffold.csproj" />
+    <ProjectReference Include="..\dataAccess\dataAccess.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
