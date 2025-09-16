@@ -1,18 +1,23 @@
+using api;
+using api.Etc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using scaffold;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var appOptions = builder.Services.AddAppOptions(builder.Configuration);
+
 
 builder.Services.AddDbContext<MyDbContext>(conf =>
 {
- conf.UseNpgsql("Host=ep-calm-moon-agsgalrn-pooler.c-2.eu-central-1.aws.neon.tech; Database=neondb; Username=neondb_owner; Password=npg_FbPxLGuKqJ29; SSL Mode=VerifyFull; Channel Binding=Require;");
+ conf.UseNpgsql(appOptions.DbConnectionString);
 });
 
 var app = builder.Build();
 
-app.MapGet("/", ([FromServices] MyDbContext dbContext) =>
+app.MapGet("/", ([FromServices] IOptionsMonitor<AppOptions> optionsMonitor, [FromServices] MyDbContext dbContext) =>
 {  
     
     
@@ -27,8 +32,7 @@ app.MapGet("/", ([FromServices] MyDbContext dbContext) =>
     dbContext.SaveChanges();
     
   var authors = dbContext.Authors.ToList();
-    var books = dbContext.Books.ToList();
-    var genres = dbContext.Genres.ToList();
+  return authors;
 });
 
 app.Run();
