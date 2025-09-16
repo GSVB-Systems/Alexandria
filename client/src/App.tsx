@@ -1,27 +1,66 @@
-import { useNavigate } from 'react-router-dom'
-import { AllBooksAtom } from "../../../Alexandria/client/src/BookAtom.ts";
+import { useNavigate, Routes, Route } from 'react-router-dom'
+import { AllBooksAtom } from "./BookAtom.ts";
 import alexandriaLogo from './assets/alex.svg'
 import menuDots from './assets/menu-dots.svg'
 import './App.css'
-import {useAtom} from "jotai";
+import { useAtom } from "jotai";
+import BookDetails from './BookDetails.tsx'
+
+function BookList({ allBooks, navigate }: { allBooks: any[], navigate: any }) {
+    return (
+        <div className="book-list-container flex flex-col" >
+            {allBooks.length === 0 ? (
+                <div className="bg-white p-8 text-center">No books found.</div>
+            ) : (
+                allBooks.map(book => (
+                    <div
+                        key={book.bookid}
+                        className="bg-white flex items-stretch mb-[30px] rounded shadow w-full h-[220px]"
+                        style={{ minHeight: 200 }}
+                        onClick={() => navigate('/book/' + book.bookid)}
+                    >
+                        <img
+                            src={book.imgurl}
+                            alt={book.title}
+                            width={98}
+                            height={150}
+                            className="object-cover m-[25px] rounded"
+                            style={{ minWidth: 98, minHeight: 150, maxWidth: 98, maxHeight: 150 }}
+                        />
+                        <div className="flex-1 flex flex-col justify-between py-[25px] pr-[25px] h-full">
+                            <div>
+                                <div className="text-lg font-medium">{book.title}</div>
+                                <div className="text-base text-gray-500 mt-2">by {book.author}</div>
+                            </div>
+                            <div className="text-sm text-gray-400">
+                                pages 260
+                            </div>
+                        </div>
+                    </div>
+                ))
+            )}
+        </div>
+    );
+}
 
 function App() {
     const [allBooks, ] = useAtom(AllBooksAtom)
     const navigate = useNavigate();
 
-    // If there are no books, add a placeholder book
     if (allBooks.length === 0) {
-        allBooks.push({
-            bookid: "0",
-            title: "Placeholder Book",
-            author: "Unknown Author",
-            imgurl: "https://via.placeholder.com/98x150?text=Book+Cover",
-            published: false
-        });
+        for (let i = 0; i < 10; i++) {
+            allBooks.push({
+                bookid: i.toString(),
+                title: "Placeholder Book",
+                author: "Unknown Author",
+                imgurl: "https://blog-cdn.reedsy.com/directories/gallery/248/large_65b0ae90317f7596d6f95bfdd6131398.jpg",
+                published: false
+            });
+        }
     }
 
     const handleLogoClick = () => {
-        window.location.href = '/';
+        navigate('/');
     }
     const handleMenuClick = () => {
         const drawerCheckbox = document.getElementById('my-drawer-4') as HTMLInputElement;
@@ -59,35 +98,10 @@ function App() {
                     </div>
                     <div className="w-screen box-border">
                         <div className="px-[60px] w-full">
-                            {allBooks.length === 0 ? (
-                                <div className="bg-white p-8 text-center">No books found.</div>
-                            ) : (
-                                allBooks.map(book => (
-                                    <div
-                                        key={book.bookid}
-                                        className="bg-white flex items-stretch mb-[30px] rounded shadow w-full h-[220px]"
-                                        style={{ minHeight: 200 }}
-                                        onClick={() => navigate('/book/' + book.bookid)}
-                                    >
-                                        <img
-                                            src={book.imgurl}
-                                            alt={book.title}
-                                            className="w-[98px] h-full object-cover m-[25px] rounded"
-                                        />
-
-                                        <div className="flex-1 flex flex-col justify-between py-[25px] pr-[25px] h-full">
-                                            <div>
-                                                <div className="text-lg font-medium">{book.title}</div>
-                                                <div className="text-base text-gray-500 mt-2">by {book.author}</div>
-                                            </div>
-                                            <div className="text-sm text-gray-400">
-                                                pages 260
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                ))
-                            )}
+                            <Routes>
+                                <Route path="/" element={<BookList allBooks={allBooks} navigate={navigate} />} />
+                                <Route path="/book/:bookid" element={<BookDetails />} />
+                            </Routes>
                         </div>
                     </div>
                 </div>
@@ -103,6 +117,5 @@ function App() {
         </>
     )
 }
-
 
 export default App
