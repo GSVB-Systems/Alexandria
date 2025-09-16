@@ -11,13 +11,15 @@ function App() {
 
     // If there are no books, add a placeholder book
     if (allBooks.length === 0) {
-        allBooks.push({
-            bookid: "0",
-            title: "Placeholder Book",
-            author: "Unknown Author",
-            imgurl: "https://via.placeholder.com/98x150?text=Book+Cover",
-            published: false
-        });
+        for (let i = 0; i < 10; i++) {
+            allBooks.push({
+                bookid: i.toString(),
+                title: "Placeholder Book",
+                author: "Unknown Author",
+                imgurl: "https://via.placeholder.com/98x150?text=Book+Cover",
+                published: false
+            });
+        }
     }
 
     const handleLogoClick = () => {
@@ -59,37 +61,38 @@ function App() {
                     </div>
                     <div className="w-screen box-border">
                         <div className="px-[60px] w-full">
-                            {allBooks.length === 0 ? (
-                                <div className="bg-white p-8 text-center">No books found.</div>
-                            ) : (
-                                allBooks.map(book => (
-                                    <div
-                                        key={book.bookid}
-                                        className="bg-white flex items-stretch mb-[30px] rounded shadow w-full h-[220px]"
-                                        style={{ minHeight: 200 }}
-                                        onClick={() => navigate('/book/' + book.bookid)}
-                                    >
-                                        <img
-                                            src={book.imgurl}
-                                            alt={book.title}
-                                            className="w-[98px] h-full object-cover m-[25px] rounded"
-                                        />
-
-                                        <div className="flex-1 flex flex-col justify-between py-[25px] pr-[25px] h-full">
-                                            <div>
-                                                <div className="text-lg font-medium">{book.title}</div>
-                                                <div className="text-base text-gray-500 mt-2">by {book.author}</div>
-                                            </div>
-                                            <div className="text-sm text-gray-400">
-                                                pages 260
+                            <div className="book-list-container flex flex-col" >
+                                {allBooks.length === 0 ? (
+                                    <div className="bg-white p-8 text-center">No books found.</div>
+                                ) : (
+                                    allBooks.map(book => (
+                                        <div
+                                            key={book.bookid}
+                                            className="bg-white flex items-stretch mb-[30px] rounded shadow w-full h-[220px]"
+                                            style={{ minHeight: 200 }}
+                                            onClick={() => navigate('/book/' + book.bookid)}
+                                        >
+                                            <img
+                                                src={book.imgurl}
+                                                alt={book.title}
+                                                className="w-[98px] h-full object-cover m-[25px] rounded"
+                                            />
+                                            <div className="flex-1 flex flex-col justify-between py-[25px] pr-[25px] h-full">
+                                                <div>
+                                                    <div className="text-lg font-medium">{book.title}</div>
+                                                    <div className="text-base text-gray-500 mt-2">by {book.author}</div>
+                                                </div>
+                                                <div className="text-sm text-gray-400">
+                                                    pages 260
+                                                </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                ))
-                            )}
+                                    ))
+                                )}
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 <div className="drawer-side z-50">
                     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>

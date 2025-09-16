@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MyDbContext>(conf =>
 {
- conf.UseNpgsql("Host=ep-calm-moon-agsgalrn-pooler.c-2.eu-central-1.aws.neon.tech; Database=neondb; Username=neondb_owner; Password=npg_FbPxLGuKqJ29; SSL Mode=VerifyFull; Channel Binding=Require;");
+ conf.UseNpgsql("");
 });
 
 var app = builder.Build();

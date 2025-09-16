@@ -6,3 +6,11 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #F6F5F0;
 }
+.book-list-container {
+    /* Already set inline, but you can move it here if preferred */
+    height: calc(100vh - 80px - 20px); /* Adjust 80px to match your navbar height */
+    margin-top: 90px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}

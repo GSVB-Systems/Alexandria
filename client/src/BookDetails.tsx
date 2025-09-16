@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router";
 import { useAtom } from "jotai";
-import { AllBooksAtom } from "../../../libraryProcejt/Client/src/BookAtom.ts";
+import { AllBooksAtom } from "./BookAtom.ts";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { API_BASE } from '../../../libraryProcejt/Client/src/ApiConfig';
+import { API_BASE } from './ApiConfig.ts';
 
 export type BookIdParameter = {
     bookid: string;
