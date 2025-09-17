@@ -15,24 +15,12 @@ builder.Services.AddDbContext<MyDbContext>(conf =>
  conf.UseNpgsql(appOptions.DbConnectionString);
 });
 
+builder.Services.AddControllers();
+builder.Services.AddOpenApiDocument();
+
 var app = builder.Build();
 
-app.MapGet("/", ([FromServices] IOptionsMonitor<AppOptions> optionsMonitor, [FromServices] MyDbContext dbContext) =>
-{  
-    
-    
-    
-    var myAuthor = new Author
-    {
-        Id = Guid.NewGuid().ToString(),
-        Name = "John Doe",
-        Createdat = DateTime.UtcNow
-    };
-    dbContext.Authors.Add(myAuthor);
-    dbContext.SaveChanges();
-    
-  var authors = dbContext.Authors.ToList();
-  return authors;
-});
 
+app.UseOpenApi();
+app.UseSwaggerUi();
 app.Run();
