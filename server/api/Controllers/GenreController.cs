@@ -27,9 +27,9 @@ public class GenreController(IGenreService genreService) : ControllerBase
     }
 
     [HttpDelete(nameof(DeleteGenre))]
-    public async Task<GenreDTO> DeleteGenre(string id)
+    public async Task<GenreDTO> DeleteGenre(DeleteGenreDTORequest genreDTO)
     {
-        return await genreService.DeleteAsync(id);
+        return await genreService.DeleteAsync(genreDTO);
     }
     
     

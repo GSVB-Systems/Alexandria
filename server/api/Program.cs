@@ -12,6 +12,7 @@ var appOptions = builder.Services.AddAppOptions(builder.Configuration);
 
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddDbContext<MyDbContext>(conf =>
 {
  conf.UseNpgsql(appOptions.DbConnectionString);

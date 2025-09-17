@@ -36,9 +36,9 @@ public class GenreService(MyDbContext context) : IGenreService
         return new GenreDTO(genre);
     }
 
-    public async Task<GenreDTO> DeleteAsync(string id)
+    public async Task<GenreDTO> DeleteAsync(DeleteGenreDTORequest dtoRequest)
     {
-        var genre = context.Genres.First(g => g.Id == id);
+        var genre = context.Genres.First(g => g.Name == dtoRequest.Name);
         context.Genres.Remove(genre);
         await context.SaveChangesAsync();
         return new GenreDTO(genre);
