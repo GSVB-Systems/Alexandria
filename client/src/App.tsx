@@ -10,21 +10,21 @@ import { useAuthorsDetails } from './AuthorDetails.tsx'
 import { useGenreDetails } from "./GenreDetails.tsx";
 
 interface Book {
-  bookid: number;
+  id: string;
   title: string;
-  author: string;
+  authors: string[];
   imgurl: string;
 }
 
 interface Author {
-  id: number;
+  id: string;
   name: string;
   createdat: string;
   books?: string[];
 }
 
 interface Genre {
-  id: number;
+  id: string;
   name: string;
   createdat: string;
   books?: string[];
@@ -38,10 +38,10 @@ function BookList({ allBooks, navigate }: { allBooks: Book[], navigate: (path: s
             ) : (
                 allBooks.map(book => (
                     <div
-                        key={book.bookid}
+                        key={book.id}
                         className="bg-white flex items-stretch mb-[30px] rounded shadow w-full h-[220px]"
                         style={{ minHeight: 200 }}
-                        onClick={() => navigate('/book/' + book.bookid)}
+                        onClick={() => navigate('/book/' + book.id)}
                     >
                         <img
                             src={book.imgurl}
@@ -54,7 +54,7 @@ function BookList({ allBooks, navigate }: { allBooks: Book[], navigate: (path: s
                         <div className="flex-1 flex flex-col justify-between py-[25px] pr-[25px] h-full">
                             <div>
                                 <div className="text-lg font-medium">{book.title}</div>
-                                <div className="text-base text-gray-500 mt-2">by {book.author}</div>
+                                <div className="text-base text-gray-500 mt-2">by {book.authors.join(', ')}</div>
                             </div>
                             <div className="text-sm text-gray-400">
                                 pages 260
@@ -72,7 +72,6 @@ function BookList({ allBooks, navigate }: { allBooks: Book[], navigate: (path: s
 function Authors() {
     useAuthorsDetails();
     const [allAuthors] = useAtom(AllAuthorsAtom);
-    const navigate = useNavigate();
 
     return (
         <div className="book-list-container flex flex-col">
@@ -109,7 +108,6 @@ function Authors() {
 function Genres() {
     useGenreDetails();
     const [allGenres] = useAtom(AllGenresAtom);
-    const navigate = useNavigate();
 
     return (
         <div className="book-list-container flex flex-col">
