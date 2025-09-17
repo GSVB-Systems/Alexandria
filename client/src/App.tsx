@@ -54,7 +54,7 @@ function App() {
                 title: "Placeholder Book",
                 author: "Unknown Author",
                 imgurl: "https://blog-cdn.reedsy.com/directories/gallery/248/large_65b0ae90317f7596d6f95bfdd6131398.jpg",
-                published: false
+                available: false
             });
         }
     }

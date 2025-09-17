@@ -14,7 +14,7 @@ export interface Book {
     title: string
     author: string
     imgurl: string
-    published: boolean
+    available: boolean
 }
 
 export default function BookDetails() {
@@ -32,7 +32,7 @@ export default function BookDetails() {
         setImgurl(book?.imgurl ?? "");
     }, [book]);
 
-    const handlePublishedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAvailableChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         fetch(`${API_BASE}/UpdateBook`, {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
@@ -41,7 +41,7 @@ export default function BookDetails() {
                 title: book?.title,
                 author: book?.author,
                 imgurl: book?.imgurl,
-                published: e.target.checked
+                available: e.target.checked
             }),
         })
             .then(async response => {
@@ -89,7 +89,7 @@ export default function BookDetails() {
                 title,
                 author,
                 imgurl,
-                published: book?.published
+                available: book?.available
             }),
         })
             .then(async response => {
@@ -128,7 +128,7 @@ export default function BookDetails() {
                     Image URL: <input value={imgurl} onChange={e => setImgurl(e.target.value)} />
                 </div>
                 <div>
-                    Published: <input type="checkbox" checked={book.published} onChange={handlePublishedChange} />
+                    Available: <input type="checkbox" checked={book.available} onChange={handleAvailableChange} />
                 </div>
                 {(book.bookid !== "1" && book.bookid !== "2") && (
                     <>
