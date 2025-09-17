@@ -1,7 +1,7 @@
 ﻿using api.DTOs;
 using api.DTOs.Requests;
 
-namespace api.Services;
+namespace api.Service;
 
 public interface IGenreService
 {

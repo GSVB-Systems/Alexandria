@@ -1,7 +1,6 @@
 using api;
 using api.Etc;
 using api.Service;
-using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
