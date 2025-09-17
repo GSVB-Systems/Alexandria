@@ -20,7 +20,7 @@ public class GenreService(MyDbContext context) : IGenreService
         {
             Id = Guid.NewGuid().ToString(),
             Name = dtoRequest.Name,
-            Createdat = DateTime.Now
+            Createdat = DateTime.UtcNow,
         };
         context.Genres.Add(genre);
         await context.SaveChangesAsync();

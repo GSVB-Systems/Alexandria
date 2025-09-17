@@ -16,7 +16,8 @@ public class GenreController(IGenreService genreService) : ControllerBase
     [HttpPost(nameof(CreateGenre))]
     public async Task<GenreDTO> CreateGenre([FromBody] CreateGenreDTORequest genreDTO)
     {
-        return await genreService.CreateAsync(genreDTO);
+        var result = await genreService.CreateAsync(genreDTO); 
+        return result;
     }
 
     [HttpPut(nameof(UpdateGenre))]
