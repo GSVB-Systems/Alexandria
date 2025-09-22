@@ -1,16 +1,18 @@
+using api.DTOs.Requests.Author;
+using api.Service;
 using Microsoft.AspNetCore.Mvc;
 using scaffold;
 
 namespace api.Controllers;
 
 [ApiController]
-public class AuthorController(MyDbContext dbContext) : ControllerBase
+public class AuthorController(IAuthorService authorService) : ControllerBase
 {
     [Route(nameof(GetAllAuthors))]
     [HttpGet]
     public async Task<ActionResult<List<Author>>> GetAllAuthors()
     {
-        var authors = dbContext.Authors.ToList();
+        var authors = await authorService.GetAllAuthors();
         return authors;
     }
     
@@ -18,35 +20,24 @@ public class AuthorController(MyDbContext dbContext) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Author>> CreateAuthor([FromBody] CreateAuthorRequestDto author)
     {
-        var authorEntity = new Author
-        {
-            Id = Guid.NewGuid().ToString(),
-            Name = author.Name,
-            Createdat = DateTime.UtcNow
-        };
-        await dbContext.Authors.AddAsync(authorEntity);
-        await dbContext.SaveChangesAsync();
-        return authorEntity;
+       var result = await authorService.CreateAuthor(author);
+       return result;
     }
 
     [Route(nameof(UpdateAuthor))]
     [HttpPatch]
     public async Task<ActionResult<Author>> UpdateAuthor([FromBody] UpdateAuthorRequestDto author)
     {
-        var existingAuthor = dbContext.Authors.First(p => p.Id == author.Id);
-        existingAuthor.Name = author.Name;
-        await dbContext.SaveChangesAsync();
-        return existingAuthor;
+        var result = await authorService.UpdateAuthor(author);
+        return result;
     }
 
     [Route(nameof(DeleteAuthor))]
     [HttpDelete]
-    public async Task<ActionResult<Author>> DeleteAuthor(string id)
+    public async Task<ActionResult<Author>> DeleteAuthor([FromBody] DeleteAuthorRequestDto author)
     {
-        var existingAuthor = dbContext.Authors.First(p => p.Id == id);
-        dbContext.Authors.Remove(existingAuthor);
-        await dbContext.SaveChangesAsync();
-        return existingAuthor;
+        var result = await authorService.DeleteAuthor(author);
+        return result;
     }
 
 }
