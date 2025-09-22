@@ -12,7 +12,7 @@ public class BookDTO
         Pages = bookEntity.Pages;
         Createdat = bookEntity.Createdat;
         if (bookEntity.Genre != null) Genre = new GenreDTO(bookEntity.Genre);
-        AuthorsIds = bookEntity.Authors?.Select(a => a.Id).ToList() ?? new List<string>();
+        Authors = bookEntity.Authors?.Select(a => a.Id).ToList() ?? new List<string>();
     }
     public string Id { get; set; }
     public string Title { get; set; }
@@ -21,5 +21,5 @@ public class BookDTO
     
     public virtual GenreDTO? Genre { get; set; }
     
-    public virtual ICollection<string> AuthorsIds { get; set; }
+    public virtual ICollection<string> Authors { get; set; }
 }
