@@ -7,8 +7,8 @@ namespace api.Controllers;
 
 public class BookController(IBookService bookService) : ControllerBase
 {
-    [HttpGet(nameof(GetBooks))]
-    public async Task<List<BookDTO>> GetBooks()
+    [HttpGet(nameof(GetAllBooks))]
+    public async Task<List<BookDTO>> GetAllBooks()
     {
         return await bookService.GetAllBooksAsync();
     }

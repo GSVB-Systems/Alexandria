@@ -7,8 +7,8 @@ namespace api.Controllers;
 
 public class GenreController(IGenreService genreService) : ControllerBase
 {
-    [HttpGet(nameof(GetGenres))]
-    public async Task<List<GenreDTO>> GetGenres()
+    [HttpGet(nameof(GetAllGenres))]
+    public async Task<List<GenreDTO>> GetAllGenres()
     {
         return await genreService.GetAllAsync();
     }
