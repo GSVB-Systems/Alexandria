@@ -29,7 +29,7 @@ public class BookService(MyDbContext context) : IBookService
     public async Task<BookDTO> UpdateBookAsync(UpdateBookDTORequest dto)
     {
         var book = context.Books.First(b => b.Id == dto.BookId);
-        context.Entry(book).Collection(b => b.Authors).LoadAsync();
+        await context.Entry(book).Collection(b => b.Authors).LoadAsync();
 
         book.Pages = dto.NewPages;
         book.Title = dto.NewTitle;
