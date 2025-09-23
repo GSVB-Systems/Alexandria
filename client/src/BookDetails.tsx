@@ -14,10 +14,10 @@ export interface Book {
     title: string
     pages: number
     createdat: string
-    genre: string
+    genre: string | null
     authors: string[]
-    imgurl: string
-    available: boolean
+    imgurl?: string      // optional since backend doesn't yet return it
+    available?: boolean  // optional since backend doesn't yet return it
 }
 
 export default function BookDetails() {
@@ -26,12 +26,12 @@ export default function BookDetails() {
     const book = allBooks.find(b => b.id === params.id);
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
+    const [authors, setAuthors] = useState("");
     const [imgurl, setImgurl] = useState("");
 
     useEffect(() => {
         setTitle(book?.title ?? "");
-        setAuthor(book?.authors.toString() ?? "");
+        setAuthors(""); // No authors data from backend yet
         setImgurl(book?.imgurl ?? "");
     }, [book]);
 
@@ -90,7 +90,7 @@ export default function BookDetails() {
             body: JSON.stringify({
                 id: book?.id,
                 title,
-                author,
+                author: authors.split(",").map(a => a.trim()),
                 imgurl,
                 available: book?.available
             }),
@@ -125,7 +125,7 @@ export default function BookDetails() {
                     Title: <input value={title} onChange={e => setTitle(e.target.value)} />
                 </div>
                 <div>
-                    Author: <input value={author} onChange={e => setAuthor(e.target.value)} />
+                    Authors: <input value={authors} onChange={e => setAuthors(e.target.value)} />
                 </div>
                 <div>
                     Image URL: <input value={imgurl} onChange={e => setImgurl(e.target.value)} />

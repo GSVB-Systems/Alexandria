@@ -6,15 +6,21 @@ import menuDots from './assets/menu-dots.svg'
 import './App.css'
 import { useAtom } from "jotai";
 import BookDetails from './BookDetails.tsx'
+import { useBooksDetails } from './BookDetailsHook.ts';
 import { useAuthorsDetails } from './AuthorDetails.tsx'
 import { useGenreDetails } from "./GenreDetails.tsx";
 
 interface Book {
-  id: string;
-  title: string;
-  authors: string[];
-  imgurl: string;
+    id: string;
+    title: string;
+    pages: number;
+    createdat: string;
+    genre: string | null;
+    authors: string[];
+    imgurl?: string;
+    available?: boolean;
 }
+
 
 interface Author {
   id: string;
@@ -54,7 +60,9 @@ function BookList({ allBooks, navigate }: { allBooks: Book[], navigate: (path: s
                         <div className="flex-1 flex flex-col justify-between py-[25px] pr-[25px] h-full">
                             <div>
                                 <div className="text-lg font-medium">{book.title}</div>
-                                <div className="text-base text-gray-500 mt-2">by {book.authors.join(', ')}</div>
+                                <div className="text-base text-gray-500 mt-2">
+                                  by {book.authors?.length ? 'Authors available' : 'No authors'}
+                                </div>
                             </div>
                             <div className="text-sm text-gray-400">
                                 pages 260
@@ -141,6 +149,7 @@ function Genres() {
 }
 
 function App() {
+    useBooksDetails();
     const [allBooks, ] = useAtom(AllBooksAtom)
     const navigate = useNavigate();
 
@@ -186,7 +195,7 @@ function App() {
                         <div className="px-[60px] w-full">
                             <Routes>
                                 <Route path="/" element={<BookList allBooks={allBooks} navigate={navigate} />} />
-                                <Route path="/book/:bookid" element={<BookDetails />} />
+                                <Route path="/book/:id" element={<BookDetails />} />
                                 <Route path="/authors" element={<Authors />} />
                                 <Route path="/genres" element={<Genres />} />
                             </Routes>
