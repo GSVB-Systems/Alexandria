@@ -1,4 +1,5 @@
-﻿using api.DTOs.Requests.Author;
+﻿using System.ComponentModel.DataAnnotations;
+using api.DTOs.Requests.Author;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using scaffold;
@@ -15,6 +16,7 @@ public class AuthorService(MyDbContext dbContext) : IAuthorService
 
     public async Task<ActionResult<Author>> CreateAuthor(CreateAuthorRequestDto author)
     {
+        Validator.ValidateObject(author, new ValidationContext(author), validateAllProperties: true);
         var authorEntity = new Author
         {
             Id = Guid.NewGuid().ToString(),
