@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { API_BASE } from './ApiConfig.ts';
 
+
 export type BookIdParameter = {
     id: string;
 }
@@ -64,7 +65,7 @@ export default function BookDetails() {
             });
     };
 
-    const handleDelete = () => {
+    const handleDelete = () => { // Why is the deleteBook using Title in the swagger?
         fetch(`${API_BASE}/DeleteBook?id=${book?.id}`, {
             method: 'DELETE',
             body: JSON.stringify({})

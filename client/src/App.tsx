@@ -65,7 +65,7 @@ function BookList({ allBooks, navigate }: { allBooks: Book[], navigate: (path: s
                                 </div>
                             </div>
                             <div className="text-sm text-gray-400">
-                                pages 260
+                                {book.pages}
                             </div>
                         </div>
                     </div>
