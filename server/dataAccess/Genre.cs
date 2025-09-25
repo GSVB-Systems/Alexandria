@@ -9,6 +9,8 @@ public interface IGenre
     string Name { get; set; }
     DateTime? Createdat { get; set; }
     ICollection<Book> Books { get; set; }
+    ICollection<Author> Authors { get; set; }
+    ICollection<Book> BooksNavigation { get; set; }
 }
 
 public partial class Genre : IGenre
@@ -20,4 +22,8 @@ public partial class Genre : IGenre
     public DateTime? Createdat { get; set; }
 
     public virtual ICollection<Book> Books { get; set; } = new List<Book>();
+
+    public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
+
+    public virtual ICollection<Book> BooksNavigation { get; set; } = new List<Book>();
 }

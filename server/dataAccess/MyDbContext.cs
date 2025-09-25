@@ -45,6 +45,23 @@ public partial class MyDbContext : DbContext
                         j.IndexerProperty<string>("Authorid").HasColumnName("authorid");
                         j.IndexerProperty<string>("Bookid").HasColumnName("bookid");
                     });
+
+            entity.HasMany(d => d.Genres).WithMany(p => p.Authors)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Authorgenrejunction",
+                    r => r.HasOne<Genre>().WithMany()
+                        .HasForeignKey("Genreid")
+                        .HasConstraintName("authorgenrejunction_genreid_fkey"),
+                    l => l.HasOne<Author>().WithMany()
+                        .HasForeignKey("Authorid")
+                        .HasConstraintName("authorgenrejunction_authorid_fkey"),
+                    j =>
+                    {
+                        j.HasKey("Authorid", "Genreid").HasName("authorgenrejunction_pkey");
+                        j.ToTable("authorgenrejunction", "library");
+                        j.IndexerProperty<string>("Authorid").HasColumnName("authorid");
+                        j.IndexerProperty<string>("Genreid").HasColumnName("genreid");
+                    });
         });
 
         modelBuilder.Entity<Book>(entity =>
@@ -54,6 +71,7 @@ public partial class MyDbContext : DbContext
             entity.ToTable("book", "library");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Imgurl).HasColumnName("bookcover");
             entity.Property(e => e.Createdat).HasColumnName("createdat");
             entity.Property(e => e.Genreid).HasColumnName("genreid");
             entity.Property(e => e.Pages).HasColumnName("pages");
@@ -74,6 +92,23 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Createdat).HasColumnName("createdat");
             entity.Property(e => e.Name).HasColumnName("name");
+
+            entity.HasMany(d => d.BooksNavigation).WithMany(p => p.Genres)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Genrebookjunction",
+                    r => r.HasOne<Book>().WithMany()
+                        .HasForeignKey("Bookid")
+                        .HasConstraintName("genrebookjunction_bookid_fkey"),
+                    l => l.HasOne<Genre>().WithMany()
+                        .HasForeignKey("Genreid")
+                        .HasConstraintName("genrebookjunction_genreid_fkey"),
+                    j =>
+                    {
+                        j.HasKey("Genreid", "Bookid").HasName("genrebookjunction_pkey");
+                        j.ToTable("genrebookjunction", "library");
+                        j.IndexerProperty<string>("Genreid").HasColumnName("genreid");
+                        j.IndexerProperty<string>("Bookid").HasColumnName("bookid");
+                    });
         });
 
         OnModelCreatingPartial(modelBuilder);

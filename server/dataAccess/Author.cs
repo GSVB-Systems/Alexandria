@@ -9,6 +9,7 @@ public interface IAuthor
     string Name { get; set; }
     DateTime? Createdat { get; set; }
     ICollection<Book> Books { get; set; }
+    ICollection<Genre> Genres { get; set; }
 }
 
 public partial class Author : IAuthor
@@ -20,4 +21,6 @@ public partial class Author : IAuthor
     public DateTime? Createdat { get; set; }
 
     public virtual ICollection<Book> Books { get; set; } = new List<Book>();
+
+    public virtual ICollection<Genre> Genres { get; set; } = new List<Genre>();
 }

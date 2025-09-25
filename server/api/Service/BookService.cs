@@ -14,12 +14,18 @@ public class BookService(MyDbContext context) : IBookService
 
     public async Task<BookDTO> CreateBookAsync(CreateBookDTORequest dto)
     {
+        var authors = await context.Authors
+            .Where(a => dto.AuthorIds.Contains(a.Id))
+            .ToListAsync();
+        
         var book = new Book
         {
             Pages = dto.Pages,
             Title = dto.Title,
             Createdat = DateTime.UtcNow,
-            Id = Guid.NewGuid().ToString()
+            Genreid = dto.Genreid,
+            Imgurl = dto.Imgurl,
+            Authors = authors
         };
         context.Books.Add(book);
         await context.SaveChangesAsync();
@@ -36,6 +42,7 @@ public class BookService(MyDbContext context) : IBookService
         book.Genre = dto.GenreId != null ? context.Genres.First(g => g.Id == dto.GenreId) : null;
         book.Authors.Clear();
         dto.AuthorIds?.ForEach(id => book.Authors.Add(context.Authors.First(a => a.Id == id)));
+        book.Imgurl = dto.NewImgurl;
         
         await context.SaveChangesAsync();
         return new BookDTO(book);

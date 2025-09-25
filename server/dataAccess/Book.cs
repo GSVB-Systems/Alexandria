@@ -10,8 +10,10 @@ public interface IBook
     int Pages { get; set; }
     DateTime? Createdat { get; set; }
     string? Genreid { get; set; }
+    string Imgurl { get; set; }
     Genre? Genre { get; set; }
     ICollection<Author> Authors { get; set; }
+    ICollection<Genre> Genres { get; set; }
 }
 
 public partial class Book : IBook
@@ -26,7 +28,11 @@ public partial class Book : IBook
 
     public string? Genreid { get; set; }
 
+    public string Imgurl { get; set; } = null!;
+
     public virtual Genre? Genre { get; set; }
 
     public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
+
+    public virtual ICollection<Genre> Genres { get; set; } = new List<Genre>();
 }

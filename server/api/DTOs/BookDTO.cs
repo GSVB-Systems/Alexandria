@@ -13,6 +13,7 @@ public class BookDTO
         Createdat = bookEntity.Createdat;
         if (bookEntity.Genre != null) Genre = new GenreDTO(bookEntity.Genre);
         Authors = bookEntity.Authors?.Select(a => a.Id).ToList() ?? new List<string>();
+        Imgurl = bookEntity.Imgurl;
     }
     public string Id { get; set; }
     public string Title { get; set; }
@@ -22,4 +23,6 @@ public class BookDTO
     public virtual GenreDTO? Genre { get; set; }
     
     public virtual ICollection<string> Authors { get; set; }
+    
+    public string Imgurl { get; set; }
 }
