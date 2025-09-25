@@ -14,12 +14,18 @@ public class BookService(MyDbContext context) : IBookService
 
     public async Task<BookDTO> CreateBookAsync(CreateBookDTORequest dto)
     {
+        if (dto.AuthorIds == null || !dto.AuthorIds.Any())
+        {
+            throw new ArgumentException("AuthorIds cannot be null or empty.");
+        }
+        
         var authors = await context.Authors
             .Where(a => dto.AuthorIds.Contains(a.Id))
             .ToListAsync();
         
         var book = new Book
         {
+            Id = Guid.NewGuid().ToString(),
             Pages = dto.Pages,
             Title = dto.Title,
             Createdat = DateTime.UtcNow,

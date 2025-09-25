@@ -18,4 +18,7 @@ public record CreateBookDTORequest
     
     [Required] [MinLength(1)]
     public ICollection<string> AuthorIds { get; set; }
+    
+    [Required] [MinLength(1)]
+    public string Id {get; set;}
 }
