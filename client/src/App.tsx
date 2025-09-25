@@ -9,6 +9,7 @@ import BookDetails from './BookDetails.tsx'
 import { useBooksDetails } from './BookDetailsHook.ts';
 import { useAuthorsDetails } from './AuthorDetails.tsx'
 import { useGenreDetails } from "./GenreDetails.tsx";
+import {CreatePage} from "./CreatePage.tsx";
 
 interface Book {
     id: string;
@@ -195,6 +196,7 @@ function App() {
                         <div className="px-[60px] w-full">
                             <Routes>
                                 <Route path="/" element={<BookList allBooks={allBooks} navigate={navigate} />} />
+                                <Route path="/create" element={<CreatePage />} />
                                 <Route path="/book/:id" element={<BookDetails />} />
                                 <Route path="/authors" element={<Authors />} />
                                 <Route path="/genres" element={<Genres />} />
@@ -206,6 +208,8 @@ function App() {
                     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                         {/* Sidebar content here */}
+                        <li><Link to="/create">Create</Link></li>
+                        <li><Link to="/">Books</Link></li>
                         <li><Link to="/authors">Authors</Link></li>
                         <li><Link to="/genres">Genres</Link></li>
                     </ul>
