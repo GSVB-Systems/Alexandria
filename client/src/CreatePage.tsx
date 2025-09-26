@@ -67,8 +67,8 @@ import {useEffect, useState} from "react";
                     body: JSON.stringify({
                         title: bookTitle,
                         pages: parseInt(bookPages),
-                        genre: bookGenre,
-                        authors: bookAuthors.split(",").map(a => a.trim()),
+                        genreid: bookGenre,
+                        authorIds: bookAuthors.split(",").map(a => a.trim()),
                         imgurl: bookImgUrl
                     }),
                 });
