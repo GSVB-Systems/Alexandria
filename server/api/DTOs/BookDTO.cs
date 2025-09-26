@@ -12,7 +12,8 @@ public class BookDTO
         Pages = bookEntity.Pages;
         Createdat = bookEntity.Createdat;
         if (bookEntity.Genre != null) Genre = new GenreDTO(bookEntity.Genre);
-        Authors = bookEntity.Authors?.Select(a => a.Id).ToList() ?? new List<string>();
+        Authors = bookEntity.Authors?.Select(a => a.Id).ToList() ?? new List<String>();
+        
         Imgurl = bookEntity.Imgurl;
     }
     public string Id { get; set; }
