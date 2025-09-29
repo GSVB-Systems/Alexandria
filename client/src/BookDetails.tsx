@@ -32,7 +32,7 @@ export default function BookDetails() {
 
     useEffect(() => {
         setTitle(book?.title ?? "");
-        setAuthors(""); // No authors data from backend yet
+        setAuthors(book?.authors?.map(author => author.name).join(", ") ?? "");
         setImgurl(book?.imgurl ?? "");
     }, [book]);
 
@@ -125,6 +125,7 @@ export default function BookDetails() {
                 <div>
                     Title: <input value={title} onChange={e => setTitle(e.target.value)} />
                 </div>
+                <div>Genre: {book.genre?.name ?? "No genre"}</div>
                 <div>
                     Authors: <input value={authors} onChange={e => setAuthors(e.target.value)} />
                 </div>
