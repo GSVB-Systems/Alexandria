@@ -13,6 +13,14 @@ public class GenreDTO
         Createdat = genreEntity.Createdat;
         Books = genreEntity.Books?.Select(b => b.Id).ToList() ?? new List<string>();
     }
+    
+    public GenreDTO(string id, string name, DateTime? createdat)
+    {
+        Id = id;
+        Name = name;
+        Createdat = createdat;
+        Books = new List<string>();
+    }
 
     public string Id { get; set; } 
     public string Name { get; set; } 
