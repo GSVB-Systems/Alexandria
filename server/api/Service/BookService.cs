@@ -9,9 +9,15 @@ public class BookService(MyDbContext context) : IBookService
 {
     public async Task<List<BookDTO>> GetAllBooksAsync()
     {
-        return await context.Books.Select(b => new BookDTO(b)).ToListAsync();
+        var books = await context.Books
+            .Include(b => b.Genre)
+            .Include(b => b.Authors)
+            .ToListAsync();
+    
+        return books.Select(b => new BookDTO(b)).ToList();
     }
 
+    
     public async Task<BookDTO> CreateBookAsync(CreateBookDTORequest dto)
     {
         if (dto.AuthorIds == null || !dto.AuthorIds.Any())

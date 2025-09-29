@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Immutable;
 using scaffold;
 
 namespace api.DTOs;
@@ -11,11 +12,13 @@ public class BookDTO
         Title = bookEntity.Title;
         Pages = bookEntity.Pages;
         Createdat = bookEntity.Createdat;
-        if (bookEntity.Genre != null) Genre = new GenreDTO(bookEntity.Genre);
-        Authors = bookEntity.Authors?.Select(a => a.Id).ToList() ?? new List<String>();
-        
+        if (bookEntity.Genre != null) 
+            Genre = new GenreDTO(bookEntity.Genre.Id, bookEntity.Genre.Name, bookEntity.Genre.Createdat);
+        Authors = bookEntity.Authors?.Select(a => new AuthorDTO(a.Id, a.Name, a.Createdat)).ToList() ?? new List<AuthorDTO>();
+    
         Imgurl = bookEntity.Imgurl;
     }
+
     public string Id { get; set; }
     public string Title { get; set; }
     public int Pages { get; set; }
@@ -23,7 +26,7 @@ public class BookDTO
     
     public virtual GenreDTO? Genre { get; set; }
     
-    public virtual ICollection<string> Authors { get; set; }
+    public virtual ICollection<AuthorDTO> Authors { get; set; }
     
     public string Imgurl { get; set; }
 }
