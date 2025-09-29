@@ -16,12 +16,20 @@ interface Book {
     title: string;
     pages: number;
     createdat: string;
-    genre: string | null;
-    authors: string[];
+    genre: {
+        id: string;
+        name: string;
+        createdat: string;
+        books: never[];
+    } | null;
+    authors: {
+        id: string;
+        name: string;
+        createdat: string;
+    }[];
     imgurl?: string;
     available?: boolean;
 }
-
 
 interface Author {
   id: string;
@@ -62,7 +70,10 @@ function BookList({ allBooks, navigate }: { allBooks: Book[], navigate: (path: s
                             <div>
                                 <div className="text-lg font-medium">{book.title}</div>
                                 <div className="text-base text-gray-500 mt-2">
-                                  by {book.authors?.length ? 'Authors available' : 'No authors'}
+                                  by {book.authors?.length ? book.authors.map(author => author.name).join(', ') : 'No authors'}
+                                </div>
+                                <div className="text-sm text-gray-500 mt-1">
+                                    {book.genre?.name ?? 'No genre'}
                                 </div>
                             </div>
                             <div className="text-sm text-gray-400">

@@ -11,14 +11,23 @@ export type BookIdParameter = {
 }
 
 export interface Book {
-    id: string
-    title: string
-    pages: number
-    createdat: string
-    genre: string | null
-    authors: string[]
-    imgurl?: string      // optional since backend doesn't yet return it
-    available?: boolean  // optional since backend doesn't yet return it
+    id: string;
+    title: string;
+    pages: number;
+    createdat: string;
+    genre: {
+        id: string;
+        name: string;
+        createdat: string;
+        books: never[];
+    } | null;
+    authors: {
+        id: string;
+        name: string;
+        createdat: string;
+    }[];
+    imgurl?: string;
+    available?: boolean;
 }
 
 export default function BookDetails() {
@@ -32,7 +41,7 @@ export default function BookDetails() {
 
     useEffect(() => {
         setTitle(book?.title ?? "");
-        setAuthors(""); // No authors data from backend yet
+        setAuthors(book?.authors?.map(author => author.name).join(", ") ?? "");
         setImgurl(book?.imgurl ?? "");
     }, [book]);
 
@@ -125,6 +134,7 @@ export default function BookDetails() {
                 <div>
                     Title: <input value={title} onChange={e => setTitle(e.target.value)} />
                 </div>
+                <div>Genre: {book.genre?.name ?? "No genre"}</div>
                 <div>
                     Authors: <input value={authors} onChange={e => setAuthors(e.target.value)} />
                 </div>
