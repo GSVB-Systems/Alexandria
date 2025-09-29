@@ -11,14 +11,23 @@ export type BookIdParameter = {
 }
 
 export interface Book {
-    id: string
-    title: string
-    pages: number
-    createdat: string
-    genre: string | null
-    authors: string[]
-    imgurl?: string      // optional since backend doesn't yet return it
-    available?: boolean  // optional since backend doesn't yet return it
+    id: string;
+    title: string;
+    pages: number;
+    createdat: string;
+    genre: {
+        id: string;
+        name: string;
+        createdat: string;
+        books: never[];
+    } | null;
+    authors: {
+        id: string;
+        name: string;
+        createdat: string;
+    }[];
+    imgurl?: string;
+    available?: boolean;
 }
 
 export default function BookDetails() {
