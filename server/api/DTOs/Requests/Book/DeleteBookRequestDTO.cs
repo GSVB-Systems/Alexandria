@@ -4,5 +4,5 @@ namespace api.DTOs.Requests.Book;
 
 public record DeleteBookRequestDTO
 {
-    [Required] [MinLength(1)] public string Title { get; set; }
+    [Required] [MinLength(1)] public string Id { get; set; }
 }

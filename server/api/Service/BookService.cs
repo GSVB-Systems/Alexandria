@@ -62,7 +62,7 @@ public class BookService(MyDbContext context) : IBookService
 
     public async Task<BookDTO> DeleteBookAsync(DeleteBookRequestDTO dto)
     {
-        var existingBook = context.Books.First(b => b.Title == dto.Title); 
+        var existingBook = context.Books.First(b => b.Id == dto.Id); 
         context.Books.Remove(existingBook); 
         await context.SaveChangesAsync(); 
         return new BookDTO(existingBook);
