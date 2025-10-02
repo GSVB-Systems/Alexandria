@@ -147,6 +147,16 @@ import { useEffect, useState } from 'react';
               return;
             }
 
+            if (!bookGenre) { // Add this validation
+              toast.error('Please select a genre.');
+              return;
+            }
+
+            if (!bookAuthors) { // Add this validation
+              toast.error('Please select an author.');
+              return;
+            }
+
             try {
               const response = await fetch(`${API_BASE}/UpdateBook`, {
                 method: 'PUT',
@@ -178,29 +188,9 @@ import { useEffect, useState } from 'react';
             }
           };
 
-          const handleUpdateBook = async () => {
+          const handleDeleteBook = async () => {
             if (!selectedBookId) {
-              toast.error('Please select a book to update.');
-              return;
-            }
-
-            if (!bookTitle.trim()) {
-              toast.error('Book title cannot be empty.');
-              return;
-            }
-
-            if (!bookPages || parseInt(bookPages) <= 0) {
-              toast.error('Please enter a valid number of pages.');
-              return;
-            }
-
-            if (!bookGenre) { // Add this validation
-              toast.error('Please select a genre.');
-              return;
-            }
-
-            if (!bookAuthors) { // Add this validation
-              toast.error('Please select an author.');
+              toast.error('Please select a book to delete.');
               return;
             }
 
