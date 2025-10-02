@@ -4,5 +4,5 @@ namespace api.DTOs.Requests;
 
 public class DeleteGenreDTORequest
 {
-    [Required] [MinLength(1)] public string Name { get; set; }
+    [Required] [MinLength(1)] public string id { get; set; }
 }

@@ -105,8 +105,8 @@ public class UnitTest1
         var service = new GenreService(context);
         var request = new UpdateGenreDTORequest
         {
-            LookingForId = genre.Id,
-            NewGenreName = "Yay i got a new name"
+            id = genre.Id,
+            name = "Yay i got a new name"
         };
         
         var result = await service.UpdateAsync(request);
@@ -119,12 +119,12 @@ public class UnitTest1
     public async Task DeleteGenresAsync_ShouldRemoveChosenGenre()
     {
         var context = GetInMemoryDbContext();
-        var genre = new Genre { Id = Guid.NewGuid().ToString(), Name = "Tragic Comedy" };
+        var genre = new Genre { Id = Guid.NewGuid().ToString()};
         context.Genres.Add(genre);
         await context.SaveChangesAsync();
         
         var service = new GenreService(context);
-        var request = new DeleteGenreDTORequest { Name = "Tragic Comedy" };
+        var request = new DeleteGenreDTORequest { id = genre.Id };
         
         var result = await service.DeleteAsync(request);
         Assert.Equal("Tragic Comedy", result.Name);

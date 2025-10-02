@@ -30,15 +30,15 @@ public class GenreService(MyDbContext context) : IGenreService
 
     public async Task<GenreDTO?> UpdateAsync(UpdateGenreDTORequest dtoRequest)
     {
-        var genre = context.Genres.First(g => g.Id == dtoRequest.LookingForId);
-        genre.Name = dtoRequest.NewGenreName;
+        var genre = context.Genres.First(g => g.Id == dtoRequest.id);
+        genre.Name = dtoRequest.name;
         await context.SaveChangesAsync();
         return new GenreDTO(genre);
     }
 
     public async Task<GenreDTO> DeleteAsync(DeleteGenreDTORequest dtoRequest)
     {
-        var genre = context.Genres.First(g => g.Name == dtoRequest.Name);
+        var genre = context.Genres.First(g => g.Id == dtoRequest.id);
         context.Genres.Remove(genre);
         await context.SaveChangesAsync();
         return new GenreDTO(genre);

@@ -10,6 +10,8 @@ import { useBooksDetails } from './BookDetailsHook.ts';
 import { useAuthorsDetails } from './AuthorDetails.tsx';
 import { useGenreDetails } from './GenreDetails.tsx';
 import { CreatePage } from './CreatePage.tsx';
+import {EditPage} from "./EditPage.tsx";
+import {Toaster} from "react-hot-toast";
 
 interface Book {
   id: string;
@@ -202,6 +204,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<BookList allBooks={allBooks} navigate={navigate} />} />
                 <Route path="/create" element={<CreatePage />} />
+                  <Route path="/edit" element={<EditPage />} />
                 <Route path="/book/:id" element={<BookDetails />} />
                 <Route path="/authors" element={<Authors />} />
                 <Route path="/genres" element={<Genres />} />
@@ -217,6 +220,9 @@ function App() {
               <Link to="/create">Create</Link>
             </li>
             <li>
+                <Link to="/edit">Edit</Link>
+            </li>
+            <li>
               <Link to="/">Books</Link>
             </li>
             <li>
@@ -227,6 +233,7 @@ function App() {
             </li>
           </ul>
         </div>
+        <Toaster />
       </div>
     </>
   );

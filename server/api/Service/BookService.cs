@@ -46,15 +46,15 @@ public class BookService(MyDbContext context) : IBookService
 
     public async Task<BookDTO> UpdateBookAsync(UpdateBookDTORequest dto)
     {
-        var book = context.Books.First(b => b.Id == dto.BookId);
+        var book = context.Books.First(b => b.Id == dto.id);
         await context.Entry(book).Collection(b => b.Authors).LoadAsync();
 
-        book.Pages = dto.NewPages;
-        book.Title = dto.NewTitle;
-        book.Genre = dto.GenreId != null ? context.Genres.First(g => g.Id == dto.GenreId) : null;
+        book.Pages = dto.pages;
+        book.Title = dto.title;
+        book.Genre = dto.genre != null ? context.Genres.First(g => g.Id == dto.genre) : null;
         book.Authors.Clear();
-        dto.AuthorIds?.ForEach(id => book.Authors.Add(context.Authors.First(a => a.Id == id)));
-        book.Imgurl = dto.NewImgurl;
+        dto.authors?.ForEach(id => book.Authors.Add(context.Authors.First(a => a.Id == id)));
+        book.Imgurl = dto.imgurl;
         
         await context.SaveChangesAsync();
         return new BookDTO(book);

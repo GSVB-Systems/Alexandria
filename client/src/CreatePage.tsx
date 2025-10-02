@@ -58,6 +58,26 @@ export function CreatePage() {
   }, []);
 
   const handleCreateBook = async () => {
+    if (!bookTitle.trim()) {
+      toast.error('Book title cannot be empty.');
+      return;
+    }
+
+    if (!bookPages || parseInt(bookPages) <= 0) {
+      toast.error('Please enter a valid number of pages.');
+      return;
+    }
+
+    if (!bookGenre) {
+      toast.error('Please select a genre.');
+      return;
+    }
+
+    if (!bookAuthors) {
+      toast.error('Please select an author.');
+      return;
+    }
+
     try {
       const response = await fetch(`${API_BASE}/CreateBook`, {
         method: 'POST',
@@ -83,15 +103,21 @@ export function CreatePage() {
         setBookAuthors('');
         setBookImgUrl('');
       } else {
-        toast.error('Failed to create book.');
+        const errorData = await response.text();
+        toast.error(`Failed to create book: ${errorData || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Error creating book:', error);
-      toast.error('Error creating book.');
+      toast.error('Network error while creating book.');
     }
   };
 
   const handleCreateAuthor = async () => {
+    if (!authorName.trim()) {
+      toast.error('Author name cannot be empty.');
+      return;
+    }
+
     const result = await createAuthor(authorName);
     if (result) {
       toast.success('Author created successfully!');
@@ -102,6 +128,11 @@ export function CreatePage() {
   };
 
   const handleCreateGenre = async () => {
+    if (!genreName.trim()) {
+      toast.error('Genre name cannot be empty.');
+      return;
+    }
+
     const result = await createGenre(genreName);
     if (result) {
       toast.success('Genre created successfully!');

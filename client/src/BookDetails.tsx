@@ -90,7 +90,7 @@ export default function BookDetails() {
         toast.error(error);
       });
 
-    navigate('/books');
+    navigate('/');
   };
 
   const handleUpdate = () => {

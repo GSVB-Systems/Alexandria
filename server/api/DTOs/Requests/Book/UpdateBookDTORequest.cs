@@ -5,20 +5,20 @@ namespace api.DTOs.Requests.Book;
 public record UpdateBookDTORequest
 {
     [Required] [MinLength(1)]
-    public string BookId { get; set; }
+    public string id { get; set; }
     
     [Required] [MinLength(1)]
-    public string NewTitle { get; set; }
+    public string title { get; set; }
     
     [Required] [Range(1, int.MaxValue)]
-    public int NewPages { get; set; }
+    public int pages { get; set; }
     
     [Required]
-    public List<string> AuthorIds { get; set; }
+    public List<string> authors { get; set; }
     
     [Required]
-    public string? GenreId { get; set; }
+    public string? genre { get; set; }
     
     [Required]
-    public string NewImgurl { get; set; }
+    public string imgurl { get; set; }
 }
