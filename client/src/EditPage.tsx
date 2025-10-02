@@ -168,7 +168,7 @@ import { useEffect, useState } from 'react';
                   title: bookTitle,
                   pages: parseInt(bookPages),
                   genre: bookGenre,
-                  authors: bookAuthors,
+                  authors: [bookAuthors],
                   imgurl: bookImgUrl,
                 }),
               });
