@@ -93,33 +93,6 @@ export default function BookDetails() {
     navigate('/');
   };
 
-  const handleUpdate = () => {
-    fetch(`${API_BASE}/UpdateBook`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: book?.id,
-        title,
-        author: authors.split(',').map((a) => a.trim()),
-        imgurl,
-        available: book?.available,
-      }),
-    })
-      .then(async (response) => {
-        if (response.ok) {
-          const updatedBook = await response.json();
-          setAllBooks((books: Book[]) => books.map((b) => (b.id === updatedBook.bookid ? updatedBook : b)));
-          toast.success('Book updated successfully.');
-        } else {
-          toast.error('Failed to update book.');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(error);
-      });
-  };
-
   if (!book) return <div>Book not found.</div>;
 
   return (
@@ -144,7 +117,6 @@ export default function BookDetails() {
         </div>
         {book.id !== '1' && book.id !== '2' && (
           <>
-            <button onClick={handleUpdate}>Edit Book</button>
             <button onClick={handleDelete}>Delete</button>
           </>
         )}
