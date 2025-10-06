@@ -1,6 +1,7 @@
 using api;
 using api.Etc;
 using api.Service;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -10,9 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var appOptions = builder.Services.AddAppOptions(builder.Configuration);
 
-builder.Services.AddScoped<IAuthorService, AuthorService>();
-builder.Services.AddScoped<IGenreService, GenreService>();
-builder.Services.AddScoped<IBookService, BookService>();
+//builder.Services.AddScoped<IAuthorService, AuthorService>();
+//builder.Services.AddScoped<IGenreService, GenreService>();
+//builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddDbContext<MyDbContext>(conf =>
 {
  conf.UseNpgsql(appOptions.DbConnectionString);

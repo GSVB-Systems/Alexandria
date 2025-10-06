@@ -11,6 +11,7 @@ public class AuthorDTO
         Id = authorEntity.Id;
         Name = authorEntity.Name;
         Createdat = authorEntity.Createdat;
+        BookIds = authorEntity.Books?.Select(b => b.Id).ToList() ?? new List<string>();
     }
 
     public AuthorDTO(string id, string name, DateTime? createdat)
@@ -23,4 +24,6 @@ public class AuthorDTO
     public string Id { get; set; }
     public string Name { get; set; }
     public DateTime? Createdat { get; set; }
+
+    public List<string> BookIds { get; set; } = new List<string>();
 }

@@ -1,42 +1,45 @@
+using api.DTOs;
 using api.DTOs.Requests.Author;
 using api.Service;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using scaffold;
 
 namespace api.Controllers;
 
 [ApiController]
-public class AuthorController(IAuthorService authorService) : ControllerBase
+public class AuthorController(ILibraryService libraryService) : ControllerBase
 {
     [Route(nameof(GetAllAuthors))]
     [HttpGet]
-    public async Task<ActionResult<List<Author>>> GetAllAuthors()
+    public async Task<AuthorDTO> GetAllAuthors()
     {
-        var authors = await authorService.GetAllAuthors();
-        return authors;
+        var authors = await libraryService.GetAuthors();
+        return null;
+
     }
     
     [Route(nameof(CreateAuthor))]
     [HttpPost]
-    public async Task<ActionResult<Author>> CreateAuthor([FromBody] CreateAuthorRequestDto author)
+    public async Task<AuthorDTO> CreateAuthor([FromBody] CreateAuthorRequestDto author)
     {
-       var result = await authorService.CreateAuthor(author);
+       var result = await libraryService.CreateAuthor(author);
        return result;
     }
 
     [Route(nameof(UpdateAuthor))]
     [HttpPatch]
-    public async Task<ActionResult<Author>> UpdateAuthor([FromBody] UpdateAuthorRequestDto author)
+    public async Task<AuthorDTO> UpdateAuthor([FromBody] UpdateAuthorRequestDto author)
     {
-        var result = await authorService.UpdateAuthor(author);
+        var result = await libraryService.UpdateAuthor(author);
         return result;
     }
 
     [Route(nameof(DeleteAuthor))]
     [HttpDelete]
-    public async Task<ActionResult<Author>> DeleteAuthor([FromBody] DeleteAuthorRequestDto author)
+    public async Task<AuthorDTO> DeleteAuthor([FromBody] string author)
     {
-        var result = await authorService.DeleteAuthor(author);
+        var result = await libraryService.DeleteAuthor(author);
         return result;
     }
 
