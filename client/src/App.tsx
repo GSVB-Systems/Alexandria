@@ -1,4 +1,4 @@
-import { useNavigate, Routes, Route, Link } from 'react-router-dom';
+import { useNavigate, Routes, Route, Link, useSearchParams } from 'react-router-dom';
 import { AllBooksAtom } from './BookAtom.ts';
 import { AllAuthorsAtom, AllGenresAtom } from './AuthorGenreAtom.ts';
 import alexandriaLogo from './assets/alex.svg';
@@ -12,6 +12,7 @@ import { useGenreDetails } from './GenreDetails.tsx';
 import { CreatePage } from './CreatePage.tsx';
 import {EditPage} from "./EditPage.tsx";
 import {Toaster} from "react-hot-toast";
+import { useState, useEffect } from 'react';
 
 interface Book {
   id: string;
@@ -47,7 +48,9 @@ interface Genre {
   books?: string[];
 }
 
-function BookList({ allBooks, navigate }: { allBooks: Book[]; navigate: (path: string) => void }) {
+function BookList({ allBooks, pageNumber, itemsPerPage, navigate, }:
+                  { allBooks: Book[]; pageNumber: number; itemsPerPage: number; onPageChange: (newPage: number) => void; navigate: (path: string) => void; })
+{
   return (
     <div className="book-list-container flex flex-col">
       {allBooks.length === 0 ? (
@@ -81,6 +84,20 @@ function BookList({ allBooks, navigate }: { allBooks: Book[]; navigate: (path: s
           </div>
         ))
       )}
+      <div className="flex justify-between mt-4">
+        <button className="btn" onClick={() => {
+          const newPageNumber = pageNumber-1;
+          navigate('./?itemsPerPage='+itemsPerPage+'&pageNumber='+newPageNumber);
+        }}>
+          Previous page
+        </button>
+        <button className="btn" onClick={() => {
+          const newPageNumber = pageNumber+1;
+          navigate('./?itemsPerPage='+itemsPerPage+'&pageNumber='+newPageNumber);
+        }}>
+          Next page
+        </button>
+      </div>
     </div>
   );
 }
@@ -171,6 +188,19 @@ function App() {
       drawerCheckbox.checked = true;
     }
   };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [paginatedBooks, setPaginatedBooks] = useState<Book[]>([]);
+  const pageNumber = parseInt(searchParams.get('pageNumber') || '1');
+  const itemsPerPage = parseInt(searchParams.get('itemsPerPage') || '3');
+
+  useEffect(() => {
+    const start = (pageNumber - 1) * itemsPerPage;
+    setPaginatedBooks(allBooks.slice(start, start + itemsPerPage));
+  }, [allBooks, pageNumber, itemsPerPage]);
+
+  const handlePageChange = (newPage: number) => {
+    setSearchParams({ pageNumber: String(newPage), itemsPerPage: String(itemsPerPage) });
+  };
 
   return (
     <>
@@ -202,7 +232,7 @@ function App() {
           <div className="w-screen box-border">
             <div className="px-[60px] w-full">
               <Routes>
-                <Route path="/" element={<BookList allBooks={allBooks} navigate={navigate} />} />
+                <Route path="/" element={<BookList allBooks={paginatedBooks} pageNumber={pageNumber} itemsPerPage={itemsPerPage} onPageChange={handlePageChange} navigate={navigate} />} />
                 <Route path="/create" element={<CreatePage />} />
                   <Route path="/edit" element={<EditPage />} />
                 <Route path="/book/:id" element={<BookDetails />} />
@@ -238,5 +268,7 @@ function App() {
     </>
   );
 }
+
+
 
 export default App;

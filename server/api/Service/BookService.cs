@@ -10,8 +10,11 @@ public class BookService(MyDbContext context) : IBookService
     public async Task<List<BookDTO>> GetAllBooksAsync()
     {
         var books = await context.Books
+
             .Include(b => b.Genre)
             .Include(b => b.Authors)
+            .Skip(3)
+            .Take(3)
             .ToListAsync();
     
         return books.Select(b => new BookDTO(b)).ToList();
