@@ -22,7 +22,6 @@ interface Book {
     id: string;
     name: string;
     createdat: string;
-    books: never[];
   } | null;
   authors: {
     id: string;
@@ -30,7 +29,6 @@ interface Book {
     createdat: string;
   }[];
   imgurl?: string;
-  available?: boolean;
 }
 
 interface Author {

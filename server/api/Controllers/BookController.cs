@@ -2,15 +2,16 @@
 using api.DTOs.Requests.Book;
 using api.Service;
 using Microsoft.AspNetCore.Mvc;
+using scaffold;
 
 namespace api.Controllers;
 
 public class BookController(IBookService bookService) : ControllerBase
 {
-    [HttpGet(nameof(GetAllBooks))]
-    public async Task<List<BookDTO>> GetAllBooks()
+    [HttpPost(nameof(GetAllBooks))]
+    public async Task<List<Book>> GetAllBooks([FromBody]GetBookRequestDto dto)
     {
-        return await bookService.GetAllBooksAsync();
+        return await bookService.GetAllBooksAsync(dto);
     }
 
     [HttpPost(nameof(CreateBook))]

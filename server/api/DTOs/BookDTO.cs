@@ -12,9 +12,9 @@ public class BookDTO
         Title = bookEntity.Title;
         Pages = bookEntity.Pages;
         Createdat = bookEntity.Createdat;
-        if (bookEntity.Genre != null) 
-            Genre = new GenreDTO(bookEntity.Genre.Id, bookEntity.Genre.Name, bookEntity.Genre.Createdat);
-        Authors = bookEntity.Authors?.Select(a => new AuthorDTO(a.Id, a.Name, a.Createdat)).ToList() ?? new List<AuthorDTO>();
+        if (bookEntity.Genre != null)
+            GenreId = bookEntity.Genreid;
+        AuthorIds = bookEntity.Authors?.Select(a => a.Id).ToList() ?? new List<string>();
     
         Imgurl = bookEntity.Imgurl;
     }
@@ -24,9 +24,9 @@ public class BookDTO
     public int Pages { get; set; }
     public DateTime? Createdat { get; set; }
     
-    public virtual GenreDTO? Genre { get; set; }
+    public string? GenreId { get; set; }
     
-    public virtual ICollection<AuthorDTO> Authors { get; set; }
+    public List<string> AuthorIds { get; set; }
     
     public string Imgurl { get; set; }
 }

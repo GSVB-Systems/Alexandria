@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using api;
 using api.Etc;
 using api.Service;
@@ -20,7 +21,10 @@ builder.Services.AddDbContext<MyDbContext>(conf =>
 
 
 builder.Services.AddCors();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+ options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 builder.Services.AddOpenApiDocument();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
