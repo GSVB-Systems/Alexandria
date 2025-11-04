@@ -1,2 +1,2 @@
 // ApiConfig.ts
-export const API_BASE = 'https://localhost:5256';
+export const API_BASE = 'https://alexandria.fly.dev';
